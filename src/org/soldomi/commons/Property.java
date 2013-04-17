@@ -1,5 +1,5 @@
 package org.soldomi.commons;
 
-public class Property {
-
+public class Property<T> {
+    
 }
