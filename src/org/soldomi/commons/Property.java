@@ -1,18 +1,14 @@
 package org.soldomi.commons;
 
-public class Property<P, Q> {
-    public final P owner;
-    private Q m_value = null;
+public class Property<T> {
+    private T m_value;
 
-    public Property(P owner) {
-	this.owner = owner;
-    }
-    
-    public void set(Q value) {
+    public void set(T value) {
 	m_value = value;
     }
 
-    public Q get() {
+    public T get() {
 	return m_value;
     }
+    
 }
