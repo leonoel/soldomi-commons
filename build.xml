@@ -1,17 +1,16 @@
 <project>
 
     <target name="clean">
-        <delete dir="build"/>
+        <delete dir="bin"/>
     </target>
 
     <target name="compile" depends="clean">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes"/>
+        <mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin"/>
     </target>
 
     <target name="jar" depends="compile">
-        <mkdir dir="build/jar"/>
-        <jar destfile="build/jar/soldomi-commons.jar" basedir="build/classes">
+        <jar destfile="jar/soldomi-commons.jar" basedir="bin">
         </jar>
     </target>
 
