@@ -3,34 +3,48 @@ package org.soldomi.commons;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public abstract class DaoAction<T> {
-    public static class DaoException extends Exception {
-	public DaoException(Exception e) {
-	    super(e);
-	}
+public abstract class DaoAction<I> {
+
+    public DaoAction() {
     }
 
-    public void doTransaction(Connection connection, T t) throws DaoException {
+    public DaoAction<I> chain(final DaoAction<I> other) {
+	return new DaoAction<I>() {
+	    @Override public Result<Void> run(Connection connection, I i) {
+		Result<Void> result = DaoAction.this.run(connection, i);
+		if (result.success) 
+		    result = other.run(connection, i);
+		return result;
+	    }
+	};
+    }
+
+    public abstract Result<Void> run(Connection connection,
+				     I i);
+
+    public Result<Void> runInTransaction(Connection connection,
+					 I i) {
+	Result<Void> result;
 	try {
 	    connection.setAutoCommit(false);
-	    query(connection, t);
+	    run(connection, i);
 	    connection.commit();
+	    result = Result.success(null);
 	} catch (SQLException e1) {
-	    e1.printStackTrace();
 	    try {
 		connection.rollback();
 	    } catch (SQLException e2) {
 		e2.printStackTrace();
 	    }
-	    throw new DaoException(e1);
+	    result = Result.<Void>failure(e1.toString());
 	} finally {
 	    try {
 		connection.close();
-	    } catch (SQLException e) {
-		e.printStackTrace();
+	    } catch (SQLException e2) {
+		e2.printStackTrace();
 	    }
 	}
+	return result;
     }
 
-    public abstract void query(Connection connection, T t) throws SQLException;
 }

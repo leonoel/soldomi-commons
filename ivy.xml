@@ -1,0 +1,9 @@
+<ivy-module version="2.0">
+  <info organisation="org.soldomi" module="commons"/>
+  <configurations>
+    <conf name="default" />
+  </configurations>
+  <dependencies>
+    <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.12"/>
+  </dependencies>
+</ivy-module>
