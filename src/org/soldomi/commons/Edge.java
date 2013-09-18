@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.lang.Iterable;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Edge<T, P> implements Iterable<P> {
 
@@ -163,6 +165,14 @@ public abstract class Edge<T, P> implements Iterable<P> {
 	    result = reducer.foldIn(p, result);
 	}
 	return result;
+    }
+
+    public List<P> toList() {
+	List<P> list = new ArrayList<P>();
+	for (P p : this) {
+	    list.add(p);
+	}
+	return list;
     }
 
     public abstract int count();
