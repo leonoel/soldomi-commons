@@ -84,7 +84,7 @@ public class SqlRequest<I, O> extends DaoAction<I> {
 	    statement.execute();
 	    ResultSet resultSet = m_fctResultSet.apply(statement);
 	    EdgePopulator<O> edgePopulator = m_fctEdge.apply(i).populator();
-	    while(!resultSet.next()) {
+	    while(resultSet.next()) {
 		final O o = edgePopulator.next();
 		for (final ResultSetMapper<O> mapper : m_outputs) {
 		    mapper.feed(o, resultSet);
