@@ -1,9 +1,12 @@
 <ivy-module version="2.0">
   <info organisation="org.soldomi" module="commons"/>
   <configurations>
-    <conf name="default" />
+    <conf name="compile" />
+    <conf name="test" />
   </configurations>
   <dependencies>
-    <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.12"/>
+    <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.12" conf="compile->default"/>
+    <dependency org="com.h2database" name="h2" rev="1.3.171" conf="test->default"/>
+    <dependency org="org.javatuples" name="javatuples" rev="1.2" conf="test->default"/>
   </dependencies>
 </ivy-module>
