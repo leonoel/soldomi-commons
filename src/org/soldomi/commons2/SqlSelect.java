@@ -34,4 +34,16 @@ public abstract class SqlSelect<I, O> extends SqlRequest<I, List<O>> {
 	    return Result.<List<O>>failure(e.toString());
 	}
     }
+
+    public DaoAction<I, O> single() {
+	return this.chain(new DaoAction<List<O>, O>() {
+		@Override public Result<O> run(Connection connection, List<O> values) {
+		    if (values.isEmpty()) {
+			return Result.failure("Not found.");
+		    } else {
+			return Result.success(values.get(0));
+		    }
+		}
+	    });
+    }
 }
