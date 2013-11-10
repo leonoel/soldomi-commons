@@ -30,9 +30,9 @@ public abstract class DaoAction<I, O> {
 	};
     }
 
-    public static <O> DaoAction<Void, List<O>> concat(final List<O> items, final DaoAction<O, O> itemAction) {
-	return CollectionUtils.reduce(items, new Reducer<O, DaoAction<Void, List<O>>>() {
-		@Override public DaoAction<Void, List<O>> apply(final O item, DaoAction<Void, List<O>> acc) {
+    public static <I, O> Result<List<O>> runAll(Connection connection, final List<I> items, final DaoAction<I, O> itemAction) {
+	return CollectionUtils.reduce(items, new Reducer<I, DaoAction<Void, List<O>>>() {
+		@Override public DaoAction<Void, List<O>> apply(final I item, DaoAction<Void, List<O>> acc) {
 		    return acc.chain(new DaoAction<List<O>, List<O>>() {
 			    @Override public Result<List<O>> run(Connection connection, final List<O> oldList) {
 				return itemAction.run(connection, item).map(new Function1<O, List<O>>() {
@@ -49,7 +49,7 @@ public abstract class DaoAction<I, O> {
 		@Override public Result<List<O>> run(Connection connection, Void v) {
 		    return Result.<List<O>>success(new ArrayList<O>());
 		}
-	    });
+	    }).run(connection, null);
     }
 
     public abstract Result<O> run(Connection connection,
