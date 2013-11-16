@@ -1,9 +1,9 @@
 package org.soldomi.commons;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.LongNode;
-import org.codehaus.jackson.node.TextNode;
-import org.codehaus.jackson.map.util.StdDateFormat;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.LongNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +35,7 @@ public abstract class Property<P> {
 		if (!value.isLong()) {
 		    throw new JsonParsingException("Error parsing property (Expected : Long)");
 		}
-		set(value.getLongValue());
+		set(value.longValue());
 	    }
 
 	    @Override public void feedStatement(PreparedStatement statement, Integer index) throws SQLException {
@@ -63,7 +63,7 @@ public abstract class Property<P> {
 		if (!value.isTextual()) {
 		    throw new JsonParsingException("Error parsing property (Expected : Text)");
 		}
-		set(value.getTextValue());
+		set(value.textValue());
 	    }
 
 	    @Override public void feedStatement(PreparedStatement statement, Integer index) throws SQLException {
@@ -92,7 +92,7 @@ public abstract class Property<P> {
 		    throw new JsonParsingException("Error parsing date property : Expected Text");
 		}
 		try {
-		    set(StdDateFormat.instance.parse(value.getTextValue()));
+		    set(StdDateFormat.instance.parse(value.textValue()));
 		} catch (ParseException e) {
 		    throw new JsonParsingException("Error parsing date property : Bad format.");
 		}
