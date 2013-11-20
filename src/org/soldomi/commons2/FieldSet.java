@@ -12,6 +12,10 @@ public class FieldSet {
 	};
     }
 
+    public FieldSet1<Integer> addInt() {
+	return new FieldSet1<Integer>(FieldParser.asInt(1));
+    }
+
     public FieldSet1<Long> addLong() {
 	return new FieldSet1<Long>(FieldParser.asLong(1));
     }

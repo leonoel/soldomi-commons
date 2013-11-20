@@ -8,9 +8,17 @@ public abstract class FieldParser<T> {
 
     public abstract T parse(ResultSet resultSet) throws SQLException;
 
+    public static FieldParser<Integer> asInt(final Integer index) {
+	return new FieldParser<Integer>() {
+	    public Integer parse(ResultSet resultSet) throws SQLException {
+		return resultSet.getInt(index);
+	    }
+	};
+    }
+
     public static FieldParser<Long> asLong(final Integer index) {
 	return new FieldParser<Long>() {
-	    @Override public Long parse(ResultSet resultSet) throws SQLException {
+	    public Long parse(ResultSet resultSet) throws SQLException {
 		return resultSet.getLong(index);
 	    }
 	};
@@ -18,7 +26,7 @@ public abstract class FieldParser<T> {
 
     public static FieldParser<String> asString(final Integer index) {
 	return new FieldParser<String>() {
-	    @Override public String parse(ResultSet resultSet) throws SQLException {
+	    public String parse(ResultSet resultSet) throws SQLException {
 		return resultSet.getString(index);
 	    }
 	};

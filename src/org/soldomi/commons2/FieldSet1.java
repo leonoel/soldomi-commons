@@ -18,6 +18,10 @@ public class FieldSet1<F1> {
 	};
     }
 
+    public FieldSet2<F1, Integer> addInt() {
+	return new FieldSet2<F1, Integer>(f1, FieldParser.asInt(2));
+    }
+
     public FieldSet2<F1, Long> addLong() {
 	return new FieldSet2<F1, Long>(f1, FieldParser.asLong(2));
     }

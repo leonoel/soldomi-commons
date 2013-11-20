@@ -2,12 +2,14 @@ package org.soldomi.commons2;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.LongNode;
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import java.util.List;
+import java.util.Arrays;
 
 public abstract class JsonWriter<T> {
     public abstract JsonNode write(T value);
@@ -22,6 +24,10 @@ public abstract class JsonWriter<T> {
 	}
     }
 
+    protected final Property property(String name, Integer value) {
+	return new Property(name, new IntNode(value));
+    }
+
     protected final Property property(String name, Long value) {
 	return new Property(name, new LongNode(value));
     }
@@ -34,12 +40,16 @@ public abstract class JsonWriter<T> {
 	return new Property(name, value);
     }
 
-    protected final JsonNode object(Property... properties) {
+    protected final JsonNode object(List<Property> properties) {
 	ObjectNode objectNode = JsonNodeFactory.instance.objectNode();
 	for (Property property : properties) {
 	    objectNode.put(property.name, property.value);
 	}
 	return objectNode;
+    }
+
+    protected final JsonNode object(Property... properties) {
+	return object(Arrays.asList(properties));
     }
 
     protected final <U> JsonNode array(List<U> values, JsonWriter<U> writer) {

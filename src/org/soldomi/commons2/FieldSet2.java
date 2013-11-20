@@ -24,6 +24,10 @@ public class FieldSet2<F1, F2> {
 	};
     }
 
+    public FieldSet3<F1, F2, Integer> addInt() {
+	return new FieldSet3<F1, F2, Integer>(f1, f2, FieldParser.asInt(3));
+    }
+
     public FieldSet3<F1, F2, Long> addLong() {
 	return new FieldSet3<F1, F2, Long>(f1, f2, FieldParser.asLong(3));
     }

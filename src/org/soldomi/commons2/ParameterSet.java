@@ -32,6 +32,16 @@ public class ParameterSet {
 	return this;
     }
 
+    public ParameterSet add(final Integer value) {
+	final Integer index = m_values.size() + 1;
+	m_values.add(new Value() {
+		@Override public void feedStatement(PreparedStatement statement) throws SQLException {
+		    statement.setInt(index, value);
+		}
+	    });
+	return this;
+    }
+
     public void feedStatement(PreparedStatement statement) throws SQLException {
 	for (Value value : m_values) {
 	    value.feedStatement(statement);
