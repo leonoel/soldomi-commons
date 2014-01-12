@@ -11,4 +11,12 @@ public class CollectionUtils {
 	}
 	return acc;
     }
+
+    public static <I, O> List<O> map(List<I> inputs, Function1<I, O> mapper) {
+	List<O> result = new ArrayList<O>();
+	for (I i : inputs) {
+	    result.add(mapper.apply(i));
+	}
+	return result;
+    }
 }

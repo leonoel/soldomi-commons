@@ -52,6 +52,18 @@ public abstract class DaoAction<I, O> {
 	    }).run(connection, null);
     }
 
+    public static <T> DaoAction<T, T> chainAll(List<DaoAction<T, T>> actions) {
+	return CollectionUtils.reduce(actions, new Reducer<DaoAction<T, T>, DaoAction<T, T>>() {
+		@Override public DaoAction<T, T> apply(DaoAction<T, T> action, DaoAction<T, T> acc) {
+		    return acc.chain(action);
+		}
+	    }, new DaoAction<T, T>() {
+		@Override public Result<T> run(Connection connection, T t) {
+		    return Result.<T>success(t);
+		}
+	    });
+    }
+
     public abstract Result<O> run(Connection connection,
 				  I i);
 
